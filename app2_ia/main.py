@@ -1,9 +1,7 @@
 from fastapi import FastAPI
-from app2_ia.routes import evaluation
-from app2_ia.routes import convert
+from app2_ia.routes import ingest_controller
 
-app = FastAPI(title="Evaluación IA con CSV")
+app = FastAPI()
+app.include_router(ingest_controller.router)
 
-app.include_router(evaluation.router)
-app.include_router(convert.router)
 
