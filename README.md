@@ -59,3 +59,121 @@ http://localhost:8000/docs
 (Interfaz Swagger generada automáticamente por FastAPI)
 
 ✅ Consejo: ejecuta deactivate cuando termines para cerrar el entorno virtual.
+
+
+
+Flujo de Datos entre App1 y App2 (versión final)
+
+📁 Formato de CSV enviado desde App1 a App2
+
+CSV obligatorio con los siguientes campos:
+
+candidato_id,puesto,fortalezas,debilidades,valoracion_gpt
+c001,Marketing,Creatividad y comunicación,Organización,"El candidato demuestra iniciativa y claridad, pero debe mejorar su planificación."
+c002,Marketing,Estrategia digital,Gestión del tiempo,"Tiene buena visión estratégica, pero dificultad en cumplir plazos."
+
+🔹 valoracion_gpt es un campo obligatorio que contiene el texto generado por GPT (resumen evaluativo). 🔹 fortalezas y debilidades también deben estar presentes y reflejar lo indicado por GPT.
+
+📄 JSON generado por el Módulo 1 (API FastAPI)
+
+[
+  {
+    "candidato_id": "c001",
+    "puesto": "Marketing",
+    "fortalezas": "Creatividad y comunicación",
+    "debilidades": "Organización",
+    "texto": "El candidato demuestra iniciativa y claridad, pero debe mejorar su planificación."
+  },
+  {
+    "candidato_id": "c002",
+    "puesto": "Marketing",
+    "fortalezas": "Estrategia digital",
+    "debilidades": "Gestión del tiempo",
+    "texto": "Tiene buena visión estratégica, pero dificultad en cumplir plazos."
+  }
+]
+
+💡 Flujo modular en App2
+
+Módulo 2 (Preprocesamiento)
+
+📈 Entrada: { "texto": "..." }
+
+🔄 Salida: { "texto_limpio": "..." }
+
+Módulo 3 (Embeddings)
+
+📈 Entrada: texto_limpio
+
+🔄 Salida: embedding: List[float]
+
+Módulo 4 (VectorDB)
+
+📈 Entrada:
+
+{
+  "candidato_id": "c001",
+  "puesto": "Marketing",
+  "embedding": [...],
+  "metadata": {
+    "fortalezas": "...",
+    "debilidades": "..."
+  }
+}
+
+Módulo 5 (Ranking)
+
+📈 Entrada:
+
+{
+  "embedding_referencia": [...],
+  "candidatos": [
+    {"candidato_id": "c001", "embedding": [...]},
+    {"candidato_id": "c002", "embedding": [...]}
+  ]
+}
+
+🔄 Salida:
+
+[
+  {"candidato_id": "c001", "similitud": 0.91, "ranking": 1},
+  {"candidato_id": "c002", "similitud": 0.86, "ranking": 2}
+]
+
+🗋 Contratos de datos (Pydantic)
+
+class InformeEvaluacion(BaseModel):
+    candidato_id: str
+    puesto: str
+    fortalezas: str
+    debilidades: str
+    texto: str
+
+class TextoLimpio(BaseModel):
+    texto_limpio: str
+
+class EmbeddingCandidato(BaseModel):
+    candidato_id: str
+    puesto: str
+    embedding: List[float]
+
+class EntradaRanking(BaseModel):
+    embedding_referencia: List[float]
+    candidatos: List[EmbeddingCandidato]
+
+class ResultadoRanking(BaseModel):
+    candidato_id: str
+    similitud: float
+    ranking: int
+
+🔎 Observaciones
+
+La App2 no maneja nombres ni datos personales.
+
+La App1 es responsable de mapear candidato_id a nombre u otros datos sensibles.
+
+El campo texto es el input principal para IA.
+
+El sistema está preparado para recibir y evaluar múltiples candidatos en un solo CSV.
+
+El resultado siempre se devuelve en base a IDs y puntuación de similitud, sin juicio final automatizado.
