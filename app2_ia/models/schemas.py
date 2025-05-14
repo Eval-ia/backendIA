@@ -1,19 +1,24 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
-# Modelo de respuesta al subir el CSV
-class EvaluacionResponse(BaseModel):
-    mensaje: str
-    candidatos_procesados: int
-
-# Modelo que representa a un candidato individual
-class Candidato(BaseModel):
-    nombre: str
-    score: float
+class CandidatoCrudo(BaseModel):
+    candidato_id: str
+    puesto: str
     fortalezas: str
     debilidades: str
+    valoracion_gpt: str
 
-# Modelo de respuesta al pedir el ranking de un puesto
-class RankingResponse(BaseModel):
+class CandidatoProcesado(BaseModel):
+    candidato_id: str
     puesto: str
-    candidatos: List[Candidato]
+    fortalezas: str
+    debilidades: str
+    valoracion_gpt: str
+    texto_limpio: str
+    embedding: List[float]
+
+class ResultadoCarga(BaseModel):
+    validados: int
+    descartados: int
+    datos: List[CandidatoCrudo]
+
