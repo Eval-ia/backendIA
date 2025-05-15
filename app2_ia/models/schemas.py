@@ -17,8 +17,5 @@ class CandidatoProcesado(BaseModel):
     texto_limpio: str
     embedding: List[float]
 
-class ResultadoCarga(BaseModel):
-    validados: int
-    descartados: int
-    datos: List[CandidatoCrudo]
+
 
