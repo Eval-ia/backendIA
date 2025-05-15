@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Optional
+from datetime import datetime
 
 class CandidatoCrudo(BaseModel):
     candidato_id: str
@@ -17,7 +18,7 @@ class CandidatoProcesado(BaseModel):
     texto_limpio: str
     embedding: List[float]
     modelo_embedding: Optional[str] = None
-    timestamp: Optional[str] = None
+    timestamp: Optional[datetime] = None
 
 class EmbeddingCandidato(BaseModel):
     candidato_id: str

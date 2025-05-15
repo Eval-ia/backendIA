@@ -28,7 +28,7 @@ DATABASE_URL = os.getenv(
 # Clase base para todos los modelos
 Base = declarative_base()
 
-class CandidateEmbedding(Base):
+class EmbeddingCandidato(Base):
     """
     Modelo que representa la tabla 'evalia_embeddings' en PostgreSQL.
     Cada fila almacena un embedding de candidato y su metadata.
@@ -82,7 +82,7 @@ def insertar_en_vectordb(objeto_final: Dict[str, Any]) -> None:
     session = SessionLocal()
     try:
         # Construimos el objeto ORM con los datos proporcionados
-        record = CandidateEmbedding(
+        record = EmbeddingCandidato(
             candidato_id=int(objeto_final['candidato_id']),
             puesto=objeto_final['puesto'],
             embedding=objeto_final['embedding'],
