@@ -86,3 +86,5 @@ Desktop.ini
 # Ajusta esto si usas Docker, Node.js, etc.
 # node_modules/
 # .docker/
+"/.venv/" 
+"/.venv/" 
