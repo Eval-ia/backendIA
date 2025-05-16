@@ -8,7 +8,7 @@ con una capa de proyección adicional para alcanzar las dimensiones deseadas.
 """
 
 import logging
-from typing import Dict, List
+from typing import List
 import hashlib
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -105,7 +105,7 @@ class EmbeddingModule:
         
         return embedding_1536
     
-    def generar_embedding(self, texto_limpio: str) -> Dict[str, List[float]]:
+    def generar_embedding(self, texto_limpio: str) -> List[float]:
         """
         Genera embedding para un texto limpio
         
@@ -113,7 +113,7 @@ class EmbeddingModule:
             texto_limpio: Texto preprocesado a convertir en embedding
             
         Returns:
-            Diccionario con campo 'embedding' de 1536 dimensiones
+            Lista de floats de 1536 dimensiones
         """
         # Manejo de texto vacío
         if not texto_limpio.strip():
@@ -125,10 +125,8 @@ class EmbeddingModule:
         # Generar embedding (con cache)
         embedding = self._cached_embedding(cache_key, texto_limpio)
         
-        # Retornar en el formato esperado
-        return {
-            "embedding": embedding
-        }
+        # Retornar directamente la lista
+        return embedding
 
 
 # Instancia global del módulo (singleton pattern)
@@ -148,7 +146,7 @@ def obtener_modulo() -> EmbeddingModule:
 
 
 # Función principal para integración con pipeline
-def generar_embedding(texto_limpio: str) -> Dict[str, List[float]]:
+def generar_embedding(texto_limpio: str) -> List[float]:
     """
     Función de interfaz para el pipeline
     
@@ -156,7 +154,7 @@ def generar_embedding(texto_limpio: str) -> Dict[str, List[float]]:
         texto_limpio: Texto preprocesado a convertir en embedding
         
     Returns:
-        Diccionario con el embedding generado (1536 dimensiones)
+        Lista de floats de 1536 dimensiones
     """
     # Obtener instancia del módulo
     modulo = obtener_modulo()
