@@ -1,3 +1,4 @@
 Fila 2: Dato sensible en 'valoracion_gpt' → {'candidato_id': '1001', 'puesto': 'Marketing', 'fortalezas': 'Creatividad', 'debilidades': 'Impulsividad', 'valoracion_gpt': 'El candidato tiene buenas ideas, pero su DNI es 12345678Z.'}
 Fila 3: Campos vacíos → {'candidato_id': '1002', 'puesto': 'Ventas', 'fortalezas': nan, 'debilidades': 'Desorganización', 'valoracion_gpt': 'Contacto: +34 612345678'}
 Fila 4: ID no numérico → {'candidato_id': '100X', 'puesto': 'RRHH', 'fortalezas': 'Empatía', 'debilidades': 'Inseguridad', 'valoracion_gpt': 'Buen perfil'}
+Envio

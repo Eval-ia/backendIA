@@ -3,7 +3,7 @@ from typing import List, Optional
 from datetime import datetime
 
 class CandidatoCrudo(BaseModel):
-    candidato_id: str
+    candidato_id: int
     puesto: str
     fortalezas: str
     debilidades: str
@@ -28,6 +28,25 @@ class ResultadoCarga(BaseModel):
     validados: int
     descartados: int
     datos: List[CandidatoCrudo]
+    errores: List[str] = []    # <-- campo nuevo con valor por defecto
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "validados": 5,
+                "descartados": 0,
+                "datos": [
+                    {
+                        "candidato_id": "1001",
+                        "puesto": "Desarrollador",
+                        "fortalezas": "Lógica",
+                        "debilidades": "Poco autónomo",
+                        "valoracion_gpt": "Buen razonamiento..."
+                    }
+                ],
+                "errores": []
+            }
+        }
 
 class ResultadoRanking(BaseModel):
     candidato_id: str

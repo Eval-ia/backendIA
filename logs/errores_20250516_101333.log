@@ -1,0 +1,12 @@
+Error al parsear fila {'candidato_id': 1001, 'puesto': 'Marketing', 'fortalezas': 'Creatividad', 'debilidades': 'Impulsividad', 'valoracion_gpt': 'El candidato tiene buenas ideas, aunque debe mejorar su enfoque.'}: 1 validation error for CandidatoCrudo
+candidato_id
+  Input should be a valid string [type=string_type, input_value=1001, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Error al parsear fila {'candidato_id': 1002, 'puesto': 'Ventas', 'fortalezas': 'Estrategia', 'debilidades': 'Desorganización', 'valoracion_gpt': 'Muy buen trato con clientes, debe mejorar la planificación.'}: 1 validation error for CandidatoCrudo
+candidato_id
+  Input should be a valid string [type=string_type, input_value=1002, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Error al parsear fila {'candidato_id': 1003, 'puesto': 'RRHH', 'fortalezas': 'Empatía', 'debilidades': 'Inseguridad', 'valoracion_gpt': 'Gran capacidad de escucha, aunque a veces duda al hablar en público.'}: 1 validation error for CandidatoCrudo
+candidato_id
+  Input should be a valid string [type=string_type, input_value=1003, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
