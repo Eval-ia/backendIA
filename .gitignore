@@ -1,5 +1,88 @@
-venv/
+# Entorno virtual
+/.venv/
+
+# Archivos de Python compilados
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribución / empaquetado
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Instaladores locales
+pip-log.txt
+pip-delete-this-directory.txt
+
+# pyenv
+.python-version
+
+# Encriptación de variables de entorno
 .env
+.env.*
+
+# Cachés de pruebas y cobertura
+.pytest_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Reportes de cobertura
+coverage.xml
+*.cover
+*.py,cover
+
+# Caché de mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# IDEs y editores
+## VS Code
+.vscode/
+## JetBrains / PyCharm
+.idea/
+*.iml
+
+# Archivos del sistema operativo
+## macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+## Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Otros
+# Ajusta esto si usas Docker, Node.js, etc.
+# node_modules/
+# .docker/
