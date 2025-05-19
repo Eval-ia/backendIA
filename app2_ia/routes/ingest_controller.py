@@ -10,7 +10,8 @@ router = APIRouter()
     summary="Valida CSV, procesa embeddings y guarda en la BD vectorial"
 )
 async def procesar_csv_completo(file: UploadFile = File(...)):
-     # Paso 1: validar el CSV
+    
+    # Paso 1: validar el CSV
     candidatos_validos, errores = cargar_y_validar_csv(file)
 
     # Paso 2: procesar sólo los válidos
