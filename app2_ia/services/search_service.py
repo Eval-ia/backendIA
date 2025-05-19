@@ -10,7 +10,7 @@ from app2_ia.services.embedding import generar_embedding
 from app2_ia.utils.limpieza import limpiar_texto_para_embedding
 from app2_ia.models.schemas import ResultadoRanking
 
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 
 class SearchService:
     """
