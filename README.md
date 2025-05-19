@@ -69,8 +69,8 @@ Flujo de Datos entre App1 y App2 (versión final)
 CSV obligatorio con los siguientes campos:
 
 candidato_id,puesto,fortalezas,debilidades,valoracion_gpt
-c001,Marketing,Creatividad y comunicación,Organización,"El candidato demuestra iniciativa y claridad, pero debe mejorar su planificación."
-c002,Marketing,Estrategia digital,Gestión del tiempo,"Tiene buena visión estratégica, pero dificultad en cumplir plazos."
+1,Marketing,Creatividad y comunicación,Organización,"El candidato demuestra iniciativa y claridad, pero debe mejorar su planificación."
+2,Marketing,Estrategia digital,Gestión del tiempo,"Tiene buena visión estratégica, pero dificultad en cumplir plazos."
 
 🔹 valoracion_gpt es un campo obligatorio que contiene el texto generado por GPT (resumen evaluativo). 🔹 fortalezas y debilidades también deben estar presentes y reflejar lo indicado por GPT.
 
@@ -78,14 +78,14 @@ c002,Marketing,Estrategia digital,Gestión del tiempo,"Tiene buena visión estra
 
 [
   {
-    "candidato_id": "c001",
+    "candidato_id": "1",
     "puesto": "Marketing",
     "fortalezas": "Creatividad y comunicación",
     "debilidades": "Organización",
     "texto": "El candidato demuestra iniciativa y claridad, pero debe mejorar su planificación."
   },
   {
-    "candidato_id": "c002",
+    "candidato_id": "2",
     "puesto": "Marketing",
     "fortalezas": "Estrategia digital",
     "debilidades": "Gestión del tiempo",
@@ -112,7 +112,7 @@ Módulo 4 (VectorDB)
 📈 Entrada:
 
 {
-  "candidato_id": "c001",
+  "candidato_id": "1",
   "puesto": "Marketing",
   "embedding": [...],
   "metadata": {
@@ -128,16 +128,16 @@ Módulo 5 (Ranking)
 {
   "embedding_referencia": [...],
   "candidatos": [
-    {"candidato_id": "c001", "embedding": [...]},
-    {"candidato_id": "c002", "embedding": [...]}
+    {"candidato_id": "1", "embedding": [...]},
+    {"candidato_id": "2", "embedding": [...]}
   ]
 }
 
 🔄 Salida:
 
 [
-  {"candidato_id": "c001", "similitud": 0.91, "ranking": 1},
-  {"candidato_id": "c002", "similitud": 0.86, "ranking": 2}
+  {"candidato_id": "1", "similitud": 0.91, "ranking": 1},
+  {"candidato_id": "2", "similitud": 0.86, "ranking": 2}
 ]
 
 🗋 Contratos de datos (Pydantic)
