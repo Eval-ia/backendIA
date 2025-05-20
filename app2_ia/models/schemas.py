@@ -52,3 +52,4 @@ class ResultadoRanking(BaseModel):
     candidato_id: str
     similitud: float
     ranking: int
+    puesto: Optional[str] = None
