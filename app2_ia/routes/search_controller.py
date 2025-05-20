@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from app2_ia.services.search_service import buscar_candidatos_similares
 from app2_ia.models.schemas import ResultadoRanking
 
 router = APIRouter()
 
 class BusquedaPerfil(BaseModel):
-    puesto: str
+    puesto: Optional[str] = None
     descripcion: str
 
 @router.post(
