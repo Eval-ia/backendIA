@@ -1,6 +1,6 @@
 # app2_ia/services/search_service.py
 import logging
-from typing import List
+from typing import List, Optional
 from app2_ia.utils.limpieza import limpiar_texto_para_embedding
 from app2_ia.services.embedding import generar_embedding
 from app2_ia.services.vector_db import SessionLocal, EmbeddingCandidato
@@ -8,7 +8,7 @@ from app2_ia.models.schemas import ResultadoRanking
 
 logger = logging.getLogger(__name__)
 
-def buscar_candidatos_similares(puesto: str, descripcion: str) -> List[ResultadoRanking]:
+def buscar_candidatos_similares(puesto: Optional[str], descripcion: str) -> List[ResultadoRanking]:
     """
     Busca candidatos similares a una descripción de perfil.
     
@@ -26,7 +26,7 @@ def buscar_candidatos_similares(puesto: str, descripcion: str) -> List[Resultado
         Lista de ResultadoRanking con los candidatos más similares
     """
     # 1. Limpieza del texto
-    logger.info(f"Procesando búsqueda para puesto: {puesto}")
+    logger.info(f"Procesando búsqueda para descripción" + (f" y puesto: {puesto}" if puesto else ""))
     texto_limpio = limpiar_texto_para_embedding(descripcion)
     logger.debug(f"Texto limpio: {texto_limpio[:50]}...")
     
@@ -37,15 +37,16 @@ def buscar_candidatos_similares(puesto: str, descripcion: str) -> List[Resultado
     # 3. Búsqueda en la base de datos
     session = SessionLocal()
     try:
-        # Filtrar por puesto si se especifica
+        # Consulta base para obtener candidatos y su distancia vectorial
         query = session.query(
             EmbeddingCandidato,
             # Utiliza la función de similitud coseno de pgvector
             EmbeddingCandidato.embedding.cosine_distance(embedding_busqueda).label('distancia')
         )
         
-        # Filtrar por puesto
-        query = query.filter(EmbeddingCandidato.puesto == puesto)
+        # Filtrar por puesto solo si se especifica
+        if puesto:
+            query = query.filter(EmbeddingCandidato.puesto == puesto)
         
         # Ordenar por similitud (menor distancia = mayor similitud)
         resultados = query.order_by('distancia').all()
@@ -60,7 +61,8 @@ def buscar_candidatos_similares(puesto: str, descripcion: str) -> List[Resultado
             ranking = ResultadoRanking(
                 candidato_id=str(candidato.candidato_id),
                 similitud=round(similitud, 4),  # Redondear a 4 decimales
-                ranking=i + 1  # El ranking empieza en 1
+                ranking=i + 1,  # El ranking empieza en 1
+                puesto=candidato.puesto  # Incluir el puesto en el resultado
             )
             ranking_resultados.append(ranking)
             
