@@ -100,4 +100,17 @@ def insertar_en_vectordb(objeto_final: Dict[str, Any]) -> None:
     finally:
         # Cerramos la sesión para liberar recursos
         session.close()
-        
+
+def existe_candidato(candidato_id: int) -> bool:
+    """
+    Verifica si ya existe un candidato con ese ID en la tabla 'evalia_embeddings'.
+    """
+    session = SessionLocal()
+    try:
+        existe = session.query(EmbeddingCandidato).filter_by(candidato_id=candidato_id).first()
+        return existe is not None
+    except Exception as e:
+        raise RuntimeError(f"Error al comprobar existencia en VectorDB: {e}")
+    finally:
+        session.close()
+ 

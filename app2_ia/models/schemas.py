@@ -29,6 +29,7 @@ class ResultadoCarga(BaseModel):
     descartados: int
     datos: List[CandidatoCrudo]
     errores: List[str] = []    # <-- campo nuevo con valor por defecto
+    duplicados: Optional[List[str]] = []  # NUEVO: IDs duplicados detectados
 
     class Config:
         schema_extra = {

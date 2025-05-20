@@ -23,5 +23,12 @@ async def procesar_csv_completo(file: UploadFile = File(...)):
     # Paso 3: completar el resultado con los errores y descartados
     resultado.descartados = len(errores)
     resultado.errores = errores
+    
+    logger.info(
+        f"Carga finalizada: {resultado.validados} insertados, "
+        f"{resultado.descartados} descartados "
+        f"({len(resultado.duplicados)} duplicados), "
+        f"{len(resultado.errores)} errores."
+    )
 
     return resultado
