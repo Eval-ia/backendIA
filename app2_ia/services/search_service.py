@@ -6,7 +6,7 @@ from app2_ia.services.embedding import generar_embedding
 from app2_ia.services.vector_db import SessionLocal, EmbeddingCandidato
 from app2_ia.models.schemas import ResultadoRanking
 
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 
 def buscar_candidatos_similares(puesto: str, descripcion: str) -> List[ResultadoRanking]:
     """
@@ -71,4 +71,4 @@ def buscar_candidatos_similares(puesto: str, descripcion: str) -> List[Resultado
         logger.error(f"Error en búsqueda vectorial: {e}")
         raise
     finally:
-        session.close()
+       session.close()
