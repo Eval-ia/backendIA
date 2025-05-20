@@ -1,6 +1,9 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app2_ia.services.ingest_service import cargar_y_validar_csv, procesar_y_guardar_candidatos
 from app2_ia.models.schemas import ResultadoCarga
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -23,5 +26,12 @@ async def procesar_csv_completo(file: UploadFile = File(...)):
     # Paso 3: completar el resultado con los errores y descartados
     resultado.descartados = len(errores)
     resultado.errores = errores
+    
+    logger.info(
+        f"Carga finalizada: {resultado.validados} insertados, "
+        f"{resultado.descartados} descartados "
+        f"({len(resultado.duplicados)} duplicados), "
+        f"{len(resultado.errores)} errores."
+    )
 
     return resultado

@@ -7,8 +7,9 @@ from typing import Tuple, List
 from app2_ia.utils.validacion import validar_filas
 from app2_ia.utils.limpieza import limpiar_texto_para_embedding
 from app2_ia.services.embedding import generar_embedding
-from app2_ia.services.vector_db import insertar_en_vectordb
 from app2_ia.models.schemas import CandidatoCrudo, ResultadoCarga
+from app2_ia.services.vector_db import insertar_en_vectordb, existe_candidato
+
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +65,17 @@ def procesar_y_guardar_candidatos(candidatos: List[CandidatoCrudo]) -> Resultado
     Devuelve un ResultadoCarga con totales y datos procesados.
     """
     insertados = 0
+    descartados = 0
+    duplicados: List[str] = []
+    datos_procesados: List[dict] = []
     for candidato in candidatos:
+        if existe_candidato(int(candidato.candidato_id)):
+            msg = f"Candidato duplicado (ID: {candidato.candidato_id})"
+            logger.warning(msg)
+            duplicados.append(str(candidato.candidato_id))
+            descartados += 1
+            continue
+        
         # 1. Preprocesamiento
         texto_limpio = limpiar_texto_para_embedding(candidato.valoracion_gpt)
         logger.debug(f"Texto limpio para {candidato.candidato_id}: {texto_limpio[:50]}...")
@@ -88,15 +99,13 @@ def procesar_y_guardar_candidatos(candidatos: List[CandidatoCrudo]) -> Resultado
         # 4. Inserción en la BD
         insertar_en_vectordb(objeto_final)
         insertados += 1
+        datos_procesados.append(candidato.dict())  # Solo los que se insertan
         logger.info(f"Candidato {candidato.candidato_id} insertado en VectorDB")
 
-    # Construcción de la respuesta
-    datos_procesados: List[dict] = []
-    for candidato in candidatos:
-        datos_procesados.append(candidato.dict())
 
     return ResultadoCarga(
         validados=insertados,
         descartados=0,
-        datos=datos_procesados
+        datos=datos_procesados,
+        duplicados= duplicados
     )
