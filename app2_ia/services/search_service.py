@@ -44,7 +44,7 @@ def buscar_candidatos_similares(puesto: Optional[str], descripcion: str) -> List
                     EmbeddingCandidato,
                     # Utiliza la función de similitud coseno de pgvector
                     EmbeddingCandidato.embedding.cosine_distance(embedding_busqueda).label('distancia')
-                ).filter(EmbeddingCandidato.puesto == puesto).order_by('distancia').all()
+                ).filter(EmbeddingCandidato.puesto == puesto).order_by('distancia').limit(10).all()
                 
                 resultados = query
                 
@@ -57,7 +57,7 @@ def buscar_candidatos_similares(puesto: Optional[str], descripcion: str) -> List
                 query = session.query(
                     EmbeddingCandidato,
                     EmbeddingCandidato.embedding.cosine_distance(embedding_busqueda).label('distancia')
-                ).order_by('distancia').all()
+                ).order_by('distancia').limit(10).all()
                 
                 resultados = query
             
