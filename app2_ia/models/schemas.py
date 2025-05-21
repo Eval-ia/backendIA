@@ -54,3 +54,17 @@ class ResultadoRanking(BaseModel):
     similitud: float
     ranking: int
     puesto: Optional[str] = None
+    cluster_id: Optional[int] = None
+
+
+class ClusterAssignment(BaseModel):
+    candidato_id: str
+    cluster_id: int  # -1 por defecto para outliers si se usa HDBSCAN
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "candidato_id": "12345",
+                "cluster_id": 2
+            }
+        }
