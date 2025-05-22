@@ -64,6 +64,7 @@ if running_as_uvicorn_module and not is_venv() and not os.environ.get('EVALIA_VE
                 "sqlalchemy",
                 "pgvector",
                 "python-multipart",
+                "psycopg2-binary", 
                 "spacy",
                 "sentence-transformers"
             ]
