@@ -28,8 +28,8 @@ class ResultadoCarga(BaseModel):
     validados: int
     descartados: int
     datos: List[CandidatoCrudo]
-    errores: List[str] = []    # <-- campo nuevo con valor por defecto
-    duplicados: Optional[List[str]] = []  # NUEVO: IDs duplicados detectados
+    errores: List[str] = []    
+    duplicados: Optional[List[str]] = []  
 
     class Config:
         schema_extra = {
@@ -54,3 +54,18 @@ class ResultadoRanking(BaseModel):
     similitud: float
     ranking: int
     puesto: Optional[str] = None
+    cluster_id: Optional[int] = None
+    adjusted_score: Optional[float] = None  # Puntuación refinado por ML (opcional)
+
+
+class ClusterAssignment(BaseModel):
+    candidato_id: str
+    cluster_id: int  # -1 por defecto para outliers si se usa HDBSCAN
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "candidato_id": "12345",
+                "cluster_id": 2
+            }
+        }
