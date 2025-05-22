@@ -43,12 +43,22 @@ app2_ia/
 │   ├── embedding.py
 │   ├── vector_db.py
 │   ├── search_service.py
+│   ├── clustering_service.py
+│   ├── reranking_service.py
 ├── utils/
 │   ├── limpieza.py
 │   ├── validacion.py
+├──  scripts/
+│     └── train_reranking.py
 ├── routes/
 │   ├── ingest_controller.py
 │   ├── search_controller.py
+├── data/
+│   └── reranking_train.json  
+├── models/
+│   └── reranker.joblib  
+│
+├── requirements3.txt
 └── main.py
 ```
 
@@ -66,6 +76,9 @@ app2_ia/
 - Limpia el texto de entrada
 - Genera embedding de referencia
 - Busca candidatos más similares (cosine_distance)
+- Aplica clustering KMeans para agrupar los candidatos por similitud semántica
+- Aplica reranking supervisado con XGBoost utilizando [similitud, cluster_id] como features
+- Reordena los candidatos por adjusted_score y actualiza su posición en el ranking
 - Devuelve `ResultadoRanking` con top 10
 
 ---
@@ -130,3 +143,7 @@ Visita: [http://localhost:8000/docs](http://localhost:8000/docs)
 - Exportar resultados y errores como CSV
 - Añadir tests automatizados (pytest)
 - Añadir gráficas de candidaturas.
+- Ampliar el dataset de entrenamiento con ejemplos reales o etiquetados por RRHH
+- Incorporar nuevas features al modelo (longitud_texto, match_palabras_clave, etc.).
+- Optimizar el número de clústeres dinámicamente según los candidatos (Silhouette, Elbow method).
+- Evaluar el rendimiento del modelo con métricas de ranking como NDCG o MRR.
