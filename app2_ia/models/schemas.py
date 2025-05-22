@@ -28,8 +28,8 @@ class ResultadoCarga(BaseModel):
     validados: int
     descartados: int
     datos: List[CandidatoCrudo]
-    errores: List[str] = []    # <-- campo nuevo con valor por defecto
-    duplicados: Optional[List[str]] = []  # NUEVO: IDs duplicados detectados
+    errores: List[str] = []    
+    duplicados: Optional[List[str]] = []  
 
     class Config:
         schema_extra = {
@@ -55,6 +55,7 @@ class ResultadoRanking(BaseModel):
     ranking: int
     puesto: Optional[str] = None
     cluster_id: Optional[int] = None
+    adjusted_score: Optional[float] = None  # Puntuación refinado por ML (opcional)
 
 
 class ClusterAssignment(BaseModel):

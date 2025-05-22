@@ -12,6 +12,7 @@ from app2_ia.models.schemas import (
     ClusterAssignment
 )
 from app2_ia.services.clustering_service import ClusteringService
+from app2_ia.services.reranking_service import RerankingService
 
 logger = logging.getLogger(__name__)
 
@@ -112,6 +113,20 @@ def buscar_candidatos_similares(puesto: Optional[str], descripcion: str) -> List
                 cluster_id=mapa_clusters.get(cid)
             )
             ranking_resultados.append(ranking)
+
+        
+        # 7. Aplicar reranking si se ha cargado el modelo
+        # Se asume que el modelo de reranking está en "models/reranker.joblib"
+        # y que la clase RerankingService está implementada
+        try:
+            reranker = RerankingService("models/reranker.joblib")
+            ranking_resultados = reranker.predict(ranking_resultados)
+            logger.info("Reranking aplicado correctamente")
+        except Exception as e:
+            logger.warning(f"No se aplicó reranking: {e}")
+        # Ahora ranking_resultados incluye adjusted_score y ranking re-asignado
+        return ranking_resultados
+
 
         logger.info(f"Búsqueda completada: {len(ranking_resultados)} resultados")
         return ranking_resultados

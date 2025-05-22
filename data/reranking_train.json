@@ -1,0 +1,12 @@
+[
+  { "similitud": 0.82, "cluster_id": 1, "label_score": 0.87 },
+  { "similitud": 0.75, "cluster_id": 0, "label_score": 0.75 },
+  { "similitud": 0.68, "cluster_id": 2, "label_score": 0.73 },
+  { "similitud": 0.90, "cluster_id": 1, "label_score": 0.95 },
+  { "similitud": 0.55, "cluster_id": 0, "label_score": 0.55 },
+  { "similitud": 0.33, "cluster_id": 2, "label_score": 0.38 },
+  { "similitud": 0.40, "cluster_id": 1, "label_score": 0.45 },
+  { "similitud": 0.62, "cluster_id": 2, "label_score": 0.67 },
+  { "similitud": 0.79, "cluster_id": 0, "label_score": 0.79 },
+  { "similitud": 0.50, "cluster_id": 1, "label_score": 0.55 }
+]
