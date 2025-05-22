@@ -89,6 +89,9 @@ Desktop.ini
 "/.venv/" 
 "/.venv/" 
 .venv/
-
+venv/
+env/
+virtualenv/
+*/venv/
 # Entorno virtual de Miguel
 venv311/
