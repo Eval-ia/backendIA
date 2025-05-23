@@ -62,7 +62,7 @@
 📅 **20–21 mayo 2025**
 
 - Implementación de validaciones finales, límite en consultas, y pruebas de endpoints
-- Commits destacados: `Merge pull request #17`, `version_limite`, `línea_de_trabajo.md`
+
 
 **⏱ Duración estimada:** 1.5 días
 
@@ -75,7 +75,6 @@
 - Implementación de un modelo de clustering (`clustering`, `Implementación modelo ML`)
 - Creación de la **Guía Técnica** para desarrolladores (`Guía_Técnica_para_Desarrolladores.md`)
 - Ajustes en `requirements` y documentación técnica
-- Commits relacionados: `ad327cf`, `65500d1`, `cba16a7`, `7a974da`
 
 **⏱ Duración estimada:** 1.5 días
 
