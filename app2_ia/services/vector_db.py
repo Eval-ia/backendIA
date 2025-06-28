@@ -6,6 +6,7 @@
 import os  # Leer variables de entorno
 from datetime import date  # Fecha por defecto
 from sqlalchemy import create_engine, Column, Integer, String, Date  # Core SQLAlchemy
+from sqlalchemy import Text
 from sqlalchemy.orm import declarative_base, sessionmaker  # ORM base y sesiones
 from pgvector.sqlalchemy import Vector  # Tipo vectorial de pgvector
 from typing import Dict, Any, List  # Anotaciones de tipos
@@ -17,10 +18,9 @@ from typing import Dict, Any, List  # Anotaciones de tipos
 # Leemos la URL de conexión desde la variable de entorno DATABASE_URL.
 # Si no está definida, se conecta por defecto al servidor remoto especificado.
 # Formato: postgresql://usuario:contraseña@host:puerto/nombre_bd
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://evalia_admin:evalia_admin@95.217.212.97:5432/evalia_db?sslmode=require"
-)
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("Tienes que definir la variable de entorno DATABASE_URL")
 
 # -----------------------
 # Definición del modelo ORM
@@ -44,9 +44,9 @@ class EmbeddingCandidato(Base):
     # Columna vectorial para almacenar embeddings de 1536 dimensiones
     embedding = Column(Vector(1536),nullable=False)
     # Metadatos: fortalezas extraídas del informe
-    fortalezas = Column(String, nullable=True)
+    fortalezas = Column(Text, nullable=True)
     # Metadatos: debilidades extraídas del informe
-    debilidades = Column(String, nullable=True)
+    debilidades = Column(Text, nullable=True)
     # Fecha de creación del registro (valor por defecto: fecha actual)
     fecha_de_creacion = Column(Date, default=date.today, nullable=False)
 
@@ -56,7 +56,11 @@ class EmbeddingCandidato(Base):
 # Crea el engine para conectar con la base de datos usando DATABASE_URL
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"sslmode": "require"}
+    connect_args={
+      "sslmode": "disable",
+      # Esto ejecuta al conectar: SET client_encoding TO 'latin1'
+      "options": "-c client_encoding=latin1"
+    }
 )
 # Factoría de sesiones; cada sesión representa una transacción
 SessionLocal = sessionmaker(bind=engine)

@@ -4,6 +4,8 @@ import subprocess
 import importlib.util
 import venv
 import logging
+from dotenv import load_dotenv
+load_dotenv()
 from pathlib import Path
 
 # Verificar si estamos siendo importados por uvicorn
